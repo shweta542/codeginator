@@ -1,0 +1,50 @@
+
+// Convert Number into Word Code in codegintor
+function AmountInWords(float $amount)
+{
+
+   $amount_after_decimal = round($amount - ($num = floor($amount)), 2) * 100;
+   // Check if there is any number after decimal
+   $amt_hundred = null;
+   $count_length = strlen($num);
+   $x = 0;
+   $string = array();
+  // $change_words = array(0 => '0', 1 => '1', 2 => '2',
+   //  3 => '3', 4 => '4', 5 => '5', 6 => '6',
+  //   7 => '7', 8 => '8', 9 => '9',
+  //   10 => '10', 11 => '11', 12 => '12',
+   //  13 => '13', 14 => '14', 15 => '15',
+   //  16 => '16', 17 => '17', 18 => '18',
+   //  19 => '19', 20 => '20', 21 => '21',22 => '22', 30 => '30',
+   //  40 => '40', 50 => '50', 60 => '60',
+   //  70 => '70', 80 => '80', 90 => '90');
+   
+    $number=array();
+
+    for($i=0;$i<99;$i++){
+
+      $number[]=$i;
+    }
+    
+   $change_words=$number;
+   
+     
+    $here_digits = array('', 'Hundred','Thousand','Lac', 'Cr');
+    while( $x < $count_length ) {
+      $get_divider = ($x == 2) ? 10 : 100;
+      $amount = floor($num % $get_divider);
+      $num = floor($num / $get_divider);
+      $x += $get_divider == 10 ? 1 : 2;
+      if ($amount) {
+       $add_plural = (($counter = count($string)) && $amount > 9) ? 's' : null;
+       $amt_hundred = ($counter == 1 && $string[0]) ? ' and ' : null;
+       $string [] = ($amount < 99) ? $change_words[$amount].' '. $here_digits[$counter]. $add_plural.' 
+       '.$amt_hundred:$change_words[floor($amount / 10) * 10].' '.$change_words[$amount % 10]. ' 
+       '.$here_digits[$counter].$add_plural.' '.$amt_hundred;
+        }
+   else $string[] = null;
+   }
+   $implode_to_Rupees = implode('', array_reverse($string));
+  return $implode_to_Rupees;
+  
+}
